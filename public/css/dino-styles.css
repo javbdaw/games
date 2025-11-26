@@ -1,0 +1,236 @@
+/* ==========================================
+   1. RESET BÁSICO
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+}
+
+/* ==========================================
+   2. CONTENEDOR ARCADE
+   ========================================== */
+.arcade-console {
+    background: #222;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.5),
+        inset 0 0 20px rgba(0,0,0,0.8);
+    border: 4px solid #444;
+    text-align: center;
+    max-width: 95%;
+}
+
+.game-title {
+    font-size: 24px;
+    color: #80c1ff;
+    text-shadow: 4px 4px 0px #000;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+}
+
+.controls-hint {
+    margin-top: 15px;
+    font-size: 10px;
+    color: #888;
+}
+
+.key {
+    display: inline-block;
+    padding: 4px 8px;
+    border: 2px solid #666;
+    border-radius: 4px;
+    background: #333;
+    color: #fff;
+    box-shadow: 0 2px 0 #000;
+}
+
+/* ==========================================
+   3. CANVAS Y FASES VISUALES
+   ========================================== */
+.screen-container {
+    position: relative;
+    border: 4px solid #111;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #111;
+}
+
+/* Fase 1: Día (azul cielo) */
+canvas {
+    background: linear-gradient(to bottom, #4a92ff 0%, #8ecaff 100%);
+    transition: 2s ease;
+}
+
+/* Fase 2: Atardecer */
+canvas.phase-sunset {
+    background: linear-gradient(to bottom, #3d8aff 10%, #ffd359 80%, #ff4f54 100%);
+}
+
+/* Fase 3: Noche */
+canvas.phase-night {
+    background: linear-gradient(to bottom, #132642 0%, #233249 50%, #304a70 100%);
+}
+
+/* Fase 4: Neón */
+canvas.phase-neon {
+    background: linear-gradient(to bottom, #6f1dfd 0%, #d62976 50%, #fdc11d 100%);
+}
+
+/* ==========================================
+   4. HUD DE PUNTUACIÓN
+   ========================================== */
+.score-board {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 16px;
+    color: #ffffff;
+    z-index: 10;
+}
+
+/* ==========================================
+   5. PANTALLA DE GAME OVER
+   ========================================== */
+.game-over-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-over-box {
+    background: #fff;
+    color: #535353;
+    padding: 30px;
+    border: 4px solid #535353;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+    text-align: center;
+    animation: popIn 0.3s ease-out;
+}
+
+.game-over-box h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #ff4444;
+}
+
+.game-over-box p {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Forzar flex cuando JS muestra el overlay */
+#gameOver[style*="display: block"] {
+    display: flex !important;
+}
+
+/* ==========================================
+   6. EFECTO CRT / SCANLINES
+   ========================================== */
+.scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.1)
+    );
+    background-size: 100% 4px;
+    opacity: 0.6;
+}
+
+/* ==========================================
+   7. PANTALLA DE INTRODUCCIÓN
+   ========================================== */
+.intro-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.intro-overlay h1 {
+    font-size: 40px;
+    color: #ffda75;
+    text-shadow: 4px 4px 0 #000;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+}
+
+.intro-overlay p {
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    margin-top: 10px;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+/* ==========================================
+   8. MENSAJE DE AUMENTO DE VELOCIDAD
+   ========================================== */
+.speed-up-msg {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    font-size: 30px;
+    color: #ff3333;
+    text-shadow:
+        2px 2px 0px #fff,
+        4px 4px 0px #000;
+    letter-spacing: 2px;
+    pointer-events: none;
+    animation: pulseText 0.2s infinite alternate;
+}
+
+@keyframes pulseText {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-50%, -50%) scale(1.2); }
+}

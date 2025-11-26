@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DinoPlayerController;
+use App\Http\Controllers\JuegoDinoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlayerController;
@@ -8,16 +10,16 @@ use App\Http\Controllers\JuegoAdivinaController;
 // --- Rutas de Sesión del Jugador ---
 
 // Muestra la portada con los formularios
-Route::get('/', [PlayerController::class, 'welcome'])->name('welcome');
+Route::get('/', [DinoPlayerController::class, 'welcome'])->name('welcome');
 
 // Recibe el formulario de registro
-Route::post('/register', [PlayerController::class, 'register'])->name('player.register');
+Route::post('/register', [DinoPlayerController::class, 'register'])->name('player.register');
 
 // Recibe el formulario de login
-Route::post('/login', [PlayerController::class, 'login'])->name('player.login');
+Route::post('/login', [DinoPlayerController::class, 'login'])->name('player.login');
 
 // Cierra la sesión
-Route::get('/logout', [PlayerController::class, 'logout'])->name('player.logout');
+Route::get('/logout', [DinoPlayerController::class, 'logout'])->name('player.logout');
 
 // --- Rutas del Juego (Protegidas) ---
 
@@ -29,7 +31,13 @@ Route::middleware(['player.session'])->group(function () {
 
     Route::post('/juegos/adivina/guardar', [JuegoAdivinaController::class, 'store'])
         ->name('juegos.adivina.store');
-    
+
+    Route::get('/juegos/dino', [JuegoDinoController::class, 'index'])
+        ->name('juegos.dino');
+
+    Route::post('/juegos/dino/guardar', [JuegoDinoController::class, 'store'])
+        ->name('juegos.dino.store');
+
 });
 
 // --------------------------------------------------

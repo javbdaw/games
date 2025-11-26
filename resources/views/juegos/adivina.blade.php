@@ -7,28 +7,28 @@
     <title>Juego: Adivina</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<body class="antialiased bg-gray-100 text-gray-900">
 
-    <nav class="bg-white dark:bg-gray-800 shadow-md">
+    <nav class="bg-white shadow-md">
         <div class="max-w-xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="font-semibold text-xl text-gray-800 dark:text-gray-200">
+            <span class="font-semibold text-xl text-gray-800">
                 Jugando como: {{ $player->name }}
             </span>
-            <a href="{{ route('player.logout') }}" class="text-sm text-gray-700 dark:text-gray-300 underline">Salir</a>
+            <a href="{{ route('player.logout') }}" class="text-sm text-gray-700 underline">Salir</a>
         </div>
     </nav>
 
     <div class="py-12">
         <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
 
                     <h3 class="text-lg font-medium text-center mb-4">Adivina un número entre 1 y 100</h3>
 
                     <input 
                         type="number" 
                         id="guess-input" 
-                        class="block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 rounded-md shadow-sm"
+                        class="block w-full border-gray-300 focus:border-indigo-500 rounded-md shadow-sm"
                         placeholder="Introduce tu número...">
 
                     <button 
@@ -37,7 +37,7 @@
                         ¡Adivinar!
                     </button>
 
-                    <p id="feedback" class="text-center text-lg font-semibold mt-4 min-h-[1.5em] text-gray-900 dark:text-gray-100"></p>
+                    <p id="feedback" class="text-center text-lg font-semibold mt-4 min-h-[1.5em] text-gray-900"></p>
 
                     <p id="attempts" class="text-center text-sm text-gray-500 mt-2">Intentos: 0</p>
 
