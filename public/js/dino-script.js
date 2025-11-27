@@ -4,7 +4,7 @@
  */
 
 // ==========================================
-// 1. CONFIGURACIÓN INICIAL Y VARIABLES DOM
+// CONFIGURACIÓN INICIAL Y VARIABLES DOM
 // ==========================================
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -24,7 +24,7 @@ let assetsLoaded = 0;
 const totalAssets = 6;
 
 // ==========================================
-// 2. CARGA DE ASSETS (IMÁGENES)
+// CARGA DE ASSETS (IMÁGENES)
 // ==========================================
 
 /**
@@ -64,7 +64,7 @@ mountainSprite.onload = onAssetLoad;
 mountainSprite.src = '/img/mountain.png';
 
 // ==========================================
-// 3. ESTADO DEL JUEGO
+// ESTADOS DEL JUEGO
 // ==========================================
 let gameState = {
     isRunning: false,
@@ -75,7 +75,7 @@ let gameState = {
 };
 
 // ==========================================
-// 4. OBJETO JUGADOR (DINO)
+// OBJETO JUGADOR (DINO)
 // ==========================================
 const dino = {
     // Posición y dimensiones
@@ -166,7 +166,7 @@ const dino = {
 };
 
 // ==========================================
-// 5. GESTIÓN DE OBSTÁCULOS
+// GESTIÓN DE OBSTÁCULOS
 // ==========================================
 const obstacles = [];
 let obstacleTimer = 0;
@@ -224,9 +224,19 @@ class Obstacle {
         );
     }
 }
+function spawnObstacle() {
+    if (gameState.isRunning && !gameState.isGameOver) {
+        obstacleTimer++;
+        if (obstacleTimer > obstacleInterval) {
+            obstacles.push(new Obstacle());
+            obstacleTimer = 0;
+            obstacleInterval = Math.floor(Math.random() * 40) + 50;
+        }
+    }
+}
 
 // ==========================================
-// 6. GESTIÓN DE NUBES (CLOUDS)
+// GESTIÓN DE NUBES (CLOUDS)
 // ==========================================
 const clouds = [];
 let cloudTimer = 0;
@@ -281,7 +291,7 @@ function spawnCloud() {
 }
 
 // ==========================================
-// 7. GESTIÓN DE MONTAÑAS (PARALLAX)
+// GESTIÓN DE MONTAÑAS (PARALLAX)
 // ==========================================
 const mountains = [];
 let mountainTimer = 0;
@@ -336,7 +346,7 @@ function spawnMountain() {
 }
 
 // ==========================================
-// 8. GESTION DEL SUELO (GROUND)
+// GESTIÓN DEL SUELO (GROUND)
 // ==========================================
 const ground = {
     x: 0,
@@ -359,9 +369,9 @@ const ground = {
     }
 }
 
-/**
- * Dibuja los rectángulos de colisión en modo debug (Tecla 'D').
- */
+// ==========================================
+// MODO DEBUG (TECLA "D")
+// ==========================================
 function drawDebugHitboxes() {
     if (!debugMode) return;
 
@@ -380,9 +390,9 @@ function drawDebugHitboxes() {
     }
 }
 
-/**
- * Actualiza la puntuación y aumenta la dificultad progresivamente.
- */
+// ==========================================
+// ACTUALIZAR PUNTUACIÓN
+// ==========================================
 function updateScore() {
     if (gameState.isRunning && !gameState.isGameOver) {
         gameState.score++;
@@ -411,25 +421,10 @@ function updateScore() {
     }
 }
 
-/**
- * Genera nuevos obstáculos en intervalos aleatorios.
- */
-function spawnObstacle() {
-    if (gameState.isRunning && !gameState.isGameOver) {
-        obstacleTimer++;
-        if (obstacleTimer > obstacleInterval) {
-            obstacles.push(new Obstacle());
-            obstacleTimer = 0;
-            obstacleInterval = Math.floor(Math.random() * 40) + 50;
-        }
-    }
-}
-
+// ==========================================
+// MOSTRAR FEEDBACK VISUAL (SPEED UP!)
+// ==========================================
 let speedUpTimeout;
-
-/**
- * Muestra el mensaje de aumento de velocidad.
- */
 function showSpeedUpEffect() {
     if (!speedUpEl) return;
 
@@ -441,9 +436,9 @@ function showSpeedUpEffect() {
     }, 2000);
 }
 
-/**
- * Maneja el estado de Game Over.
- */
+// ==========================================
+// END GAME (GAME OVER)
+// ==========================================
 function endGame() {
     audio.play(audio.gameOver)
     audio.play(audio.die);
@@ -464,9 +459,9 @@ function endGame() {
     }
 }
 
-/**
- * Guarda la puntuación en la base de datos vía AJAX.
- */
+// ==========================================
+// GUARDAR PUNTUACIONES BBDD
+// ==========================================
 async function saveScore(puntuacion) {
     const tokenMeta = document.querySelector('meta[name="csrf-token"]');
     const token = tokenMeta ? tokenMeta.content : '';
@@ -492,9 +487,9 @@ async function saveScore(puntuacion) {
     }
 }
 
-/**
- * Reinicia todas las variables para una nueva partida.
- */
+// ==========================================
+// REINICIAR LAS VARIABLES
+// ==========================================
 function restart() {
     gameState = {
         isRunning: false,
@@ -531,7 +526,7 @@ function restart() {
 }
 
 // ==========================================
-// 9. BUCLE PRINCIPAL (GAME LOOP)
+// BUCLE PRINCIPAL (GAME LOOP)
 // ==========================================
 function gameLoop() {
     // Limpiar canvas
@@ -580,9 +575,8 @@ function gameLoop() {
 }
 
 // ==========================================
-// 10. LISTENERS DE EVENTOS (INPUT)
+// LISTENERS DE EVENTOS (INPUT)
 // ==========================================
-
 // Teclado
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'ArrowUp') {
@@ -633,9 +627,8 @@ document.addEventListener('mousedown', (e) => {
 });
 
 // ==========================================
-// 11. SISTEMA DE AUDIO
+// SISTEMA DE AUDIO
 // ==========================================
-
 const audio = {
     jump: new Audio('/audio/jump.mp3'),
     die: new Audio('/audio/die2.mp3'),
