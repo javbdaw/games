@@ -131,11 +131,7 @@ const dino = {
         if (gameState.isRunning && !gameState.isGameOver) {
             this.animationTimer++;
             if (this.animationTimer > this.animationSpeed) {
-                if (this.currentFrame === 1) {
-                    this.currentFrame = 2;
-                } else {
-                    this.currentFrame = 1;
-                }
+                this.currentFrame = (this.currentFrame === 1) ? 2 : 1;
                 this.animationTimer = 0;
             }
             if (this.isJumping) {
