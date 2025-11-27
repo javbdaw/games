@@ -127,7 +127,7 @@ canvas.phase-neon {
 }
 
 .game-over-box h2 {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 15px;
     color: #ff4444;
 }
@@ -135,6 +135,12 @@ canvas.phase-neon {
 .game-over-box p {
     font-size: 12px;
     line-height: 1.5;
+}
+.game-over-box p.final-score{
+    color: #4a92ff;
+    margin: 10px 0;
+    font-size: 24px;
+    font-weight: bolder;
 }
 
 @keyframes popIn {

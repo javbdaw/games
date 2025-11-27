@@ -35,6 +35,7 @@
         <div class="game-over-overlay" id="gameOver">
             <div class="game-over-box">
                 <h2>GAME OVER</h2>
+                <p class="final-score">SCORE:<span id="finalScoreDisplay">0</span></p>
                 <p>PRESS SPACEBAR</p>
                 <p>TO RESTART</p>
             </div>
@@ -43,7 +44,7 @@
         <div class="scanline"></div> </div>
 
     <div class="controls-hint">
-        <span class="key">SPACEBAR</span> or <span class="key">↑</span> TO JUMP
+        <span class="key">SPACEBAR</span> OR <span class="key">↑</span> TO JUMP
         <span class="key">ESC</span> TO EXIT
     </div>
 </div>

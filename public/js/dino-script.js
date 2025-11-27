@@ -446,6 +446,8 @@ function endGame() {
 
     const finalScore = Math.floor(gameState.score / 10);
 
+    document.getElementById('finalScoreDisplay').innerText = finalScore;
+
     if(finalScore > 0) {
         saveScore(finalScore);
     }
