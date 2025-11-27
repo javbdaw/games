@@ -565,9 +565,7 @@ function gameLoop() {
     // Renderizado (orden de capas crítico)
     clouds.forEach(cloud => cloud.draw());
     mountains.forEach(mountain => mountain.draw());
-    for (let i = 0; i < obstacles.length; i++) {
-        obstacles[i].draw();
-    }
+    obstacles.forEach(obstacle => obstacle.draw());
     drawGround();
     dino.draw();
     drawDebugHitboxes();
