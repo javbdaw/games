@@ -226,7 +226,7 @@ class Obstacle {
 }
 
 // ==========================================
-// 6. GESTIÓN DE NUBES
+// 6. GESTIÓN DE NUBES (CLOUDS)
 // ==========================================
 const clouds = [];
 let cloudTimer = 0;
@@ -336,16 +336,27 @@ function spawnMountain() {
 }
 
 // ==========================================
-// 8. FUNCIONES DE DIBUJADO Y LÓGICA
+// 8. GESTION DEL SUELO (GROUND)
 // ==========================================
+const ground = {
+    x: 0,
+    y: groundY,
+    offset: groundImageYOffset,
+    sprite: groundSprite,
 
-/**
- * Dibuja el suelo infinito.
- */
-function drawGround() {
-    const drawY = groundY - groundImageYOffset;
-    ctx.drawImage(groundSprite, groundX, drawY);
-    ctx.drawImage(groundSprite, groundX + groundSprite.width, drawY);
+    update() {
+        this.x -= gameState.gameSpeed;
+
+        if (this.x <= -this.sprite.width) {
+            this.x += this.sprite.width;
+        }
+    },
+
+    draw() {
+        const drawY = this.y - this.offset;
+        ctx.drawImage(this.sprite, this.x, drawY);
+        ctx.drawImage(this.sprite, this.x + this.sprite.width, drawY);
+    }
 }
 
 /**
@@ -511,7 +522,7 @@ function restart() {
     dino.currentFrame = 0;
     dino.animationTimer = 0;
 
-    groundX = 0;
+    ground.x = 0;
 
     gameOverEl.style.display = 'none';
     scoreEl.textContent = '0';
@@ -531,13 +542,8 @@ function gameLoop() {
         gameState.frameCount++;
 
         dino.update();
+        ground.update();
         updateScore();
-
-        // Movimiento del suelo infinito
-        groundX -= gameState.gameSpeed;
-        if (groundX <= -groundSprite.width) {
-            groundX += groundSprite.width;
-        }
 
         // Nubes
         spawnCloud();
@@ -566,7 +572,7 @@ function gameLoop() {
     clouds.forEach(cloud => cloud.draw());
     mountains.forEach(mountain => mountain.draw());
     obstacles.forEach(obstacle => obstacle.draw());
-    drawGround();
+    ground.draw();
     dino.draw();
     drawDebugHitboxes();
 
