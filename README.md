@@ -1,5 +1,7 @@
 # 🦖 Dino Runner - Game Loop Architecture
 
+<img width="1377" height="802" alt="dino-runner" src="https://github.com/user-attachments/assets/63e1551b-5019-4b89-a4e5-b59982d2f684" />
+
 Una recreación completa del juego del dinosaurio de Chrome. Implementa un motor de juego construido
 desde cero con JavaScript (Vanilla) y la Canvas API para el frontend, integrado con un backend en
 Laravel para la gestión de sesiones de usuario y persistencia de puntuaciones (High Scores) en base de
