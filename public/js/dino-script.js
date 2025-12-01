@@ -69,6 +69,7 @@ mountainSprite.src = '/img/mountain.png';
 let gameState = {
     isRunning: false,
     isGameOver: false,
+    isGodMode: false,
     score: 0,
     frameCount: 0,
     gameSpeed: 6
@@ -491,9 +492,14 @@ async function saveScore(puntuacion) {
 // REINICIAR LAS VARIABLES
 // ==========================================
 function restart() {
+
+    if (gameState.isGameOver){
+        console.log('GOD MODE: OFF (Reiniciado por GAME OVER)')
+    }
     gameState = {
         isRunning: false,
         isGameOver: false,
+        isGodMode: false,
         score: 0,
         frameCount: 0,
         gameSpeed: 6
@@ -523,6 +529,8 @@ function restart() {
     scoreEl.textContent = '0';
 
     canvas.className = '';
+
+    canvas.style.filter = 'none';
 }
 
 // ==========================================
@@ -558,7 +566,7 @@ function gameLoop() {
         spawnObstacle();
         for (let i = obstacles.length - 1; i >= 0; i--) {
             obstacles[i].update();
-            if (obstacles[i].collidesWith(dino)) endGame();
+            if (!gameState.isGodMode && obstacles[i].collidesWith(dino)) endGame(); //añadida condición isGodMode
             if (obstacles[i].isOffScreen()) obstacles.splice(i, 1);
         }
     }
@@ -611,7 +619,19 @@ document.addEventListener('keydown', (e) => {
             window.location.href = '/logout';
         }
     }
+    //===================================
+    //  ACTIVAR / DESACTIVAR GOD MODE
+    // ==================================
+        if (e.code === 'KeyG') {
+            e.preventDefault();
+            gameState.isGodMode = !gameState.isGodMode;
+
+            console.log("GOD MODE:", gameState.isGodMode ? "ON" : "OFF");
+
+            canvas.style.filter = gameState.isGodMode ? "hue-rotate(180deg) contrast(1.5)" : "none";        }
 });
+
+
 
 // Click
 document.addEventListener('mousedown', (e) => {
