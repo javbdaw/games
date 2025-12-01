@@ -17,7 +17,7 @@
     <div class="min-h-screen flex flex-col items-center justify-center gap-8 pb-10">
         <h1 class="text-4xl font-bold mb-8 [text-shadow:_4px_4px_0_#000]">🦖 DINO RUNNER</h1>
 
-        <div class="w-full max-w-4xl flex flex-col md:flex-row justify-center gap-6 px-6">
+        <div class="w-full max-w-5xl flex flex-col md:flex-row justify-center gap-8 px-8">
 
             <div class="w-full md:w-1/2 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg border-4 border-gray-200">
 
@@ -64,7 +64,7 @@
                 </form>
             </div>
 
-            <div class="w-full md:w-1/2 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg border-4 border-gray-200">
+            <div class="w-full md:w-1/2 px-10 py-10 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg border-4 border-gray-200">
                 <h2 class="text-2xl font-semibold text-center mb-4 text-gray-900 dark:text-gray-100">
                     Top 10 Players
                 </h2>
