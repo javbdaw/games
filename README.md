@@ -733,5 +733,77 @@ El **Game Loop** de Dino Runner implementa un patrón clásico de arquitectura d
 
 La arquitectura es **determinista** (dado el mismo input, produce el mismo output), **extensible** (agregar nuevas entidades requiere mínimos cambios) y **eficiente** (complejidad O(n) donde n es pequeño y acotado).
 
-```
+# Diagrama de flujo del programa
+```mermaid
+graph TD
+    Start([Usuario visita '/'])
+    Start --> CheckSession{¿Hay sesión activa?}
+    
+    CheckSession -->|Sí| GameScreen[Pantalla de Juego]
+    CheckSession -->|No| Welcome[Pantalla Welcome]
+    
+    Welcome --> ShowTop10[Mostrar Top 10 Scores]
+    ShowTop10 --> ChooseAction{Usuario elige}
+    
+    ChooseAction -->|Registrarse| FormRegister[Llena formulario registro]
+    ChooseAction -->|Login| FormLogin[Llena formulario login]
+    
+    FormRegister --> ValidateRegister{¿Nombre válido y único?}
+    ValidateRegister -->|No| ErrorRegister[Mostrar error]
+    ErrorRegister --> Welcome
+    ValidateRegister -->|Sí| CreatePlayer[Crear Player en BD]
+    
+    FormLogin --> ValidateLogin{¿Nombre existe en BD?}
+    ValidateLogin -->|No| ErrorLogin[Mostrar error]
+    ErrorLogin --> Welcome
+    ValidateLogin -->|Sí| FindPlayer[Buscar Player en BD]
+    
+    CreatePlayer --> SaveSession[Guardar player_id en sesión]
+    FindPlayer --> SaveSession
+    SaveSession --> RedirectGame[Redirigir a /juegos/dino]
+    
+    RedirectGame --> CheckMiddleware{Middleware: ¿Hay sesión?}
+    CheckMiddleware -->|No| RedirectWelcome[Redirigir a /]
+    CheckMiddleware -->|Sí| LoadGame[Cargar datos del jugador]
+    
+    LoadGame --> GameScreen
+    GameScreen --> ShowCanvas[Mostrar Canvas + Nombre jugador]
+    ShowCanvas --> WaitInput[Esperar: SPACE para comenzar]
+    
+    WaitInput --> StartGame[Iniciar juego]
+    StartGame --> GameLoop[Loop del juego activo]
+    
+    GameLoop --> UpdateGame[Actualizar posiciones]
+    UpdateGame --> CheckCollision{¿Colisión?}
+    
+    CheckCollision -->|No| UpdateScore[Actualizar score]
+    UpdateScore --> GameLoop
+    
+    CheckCollision -->|Sí| GameOver[GAME OVER]
+    GameOver --> CalcScore[Calcular score final]
+    CalcScore --> CheckScore{¿Score > 0?}
+    
+    CheckScore -->|Sí| SaveScoreAJAX[AJAX: Guardar score en BD]
+    CheckScore -->|No| ShowGameOver[Mostrar pantalla Game Over]
+    
+    SaveScoreAJAX --> InsertScore[INSERT en tabla scores]
+    InsertScore --> ReturnJSON[Retornar JSON success]
+    ReturnJSON --> ShowGameOver
+    
+    ShowGameOver --> WaitRestart[Esperar: SPACE para reiniciar]
+    WaitRestart --> RestartChoice{Usuario presiona}
+    
+    RestartChoice -->|SPACE| ResetGame[Resetear variables]
+    RestartGame --> WaitInput
+    
+    RestartChoice -->|ESC| Logout[Cerrar sesión]
+    Logout --> RedirectWelcome
+    
+    RedirectWelcome --> Start
+    
+    style Start fill:#4ade80
+    style GameOver fill:#ef4444
+    style SaveScoreAJAX fill:#3b82f6
+    style Welcome fill:#fbbf24
+    style GameScreen fill:#8b5cf6
 ```
