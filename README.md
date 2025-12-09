@@ -731,8 +731,6 @@ El **Game Loop** de Dino Runner implementa un patrón clásico de arquitectura d
 - **Render Phase:** Visualiza el estado actual sin modificarlo
 - **Scheduling:** Sincroniza con el hardware para fluidez visual
 
-La arquitectura es **determinista** (dado el mismo input, produce el mismo output), **extensible** (agregar nuevas entidades requiere mínimos cambios) y **eficiente** (complejidad O(n) donde n es pequeño y acotado).
-
 # Diagrama de flujo del programa
 ```mermaid
 graph TD
